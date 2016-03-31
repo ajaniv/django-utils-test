@@ -7,9 +7,7 @@ utils_test models module.
 """
 from __future__ import absolute_import
 from core_utils.models import db_table
-from core_utils.models import VersionedModel, NamedModel
-from core_utils import fields
-
+from core_utils.models import VersionedModel
 
 from .apps import CoreUtilsTestModelsConfig
 

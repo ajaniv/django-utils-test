@@ -38,10 +38,12 @@ setup(
     ],
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
     install_requires=[
+        'python-core-utils',
         'django-core-utils',
         'Django>=1.9.0'
     ],
     dependency_links=[
+        _git_url_root + 'python-core-utils@v0.1.0#egg=python-core-utils',
         _git_url_root + 'django-core-utils@v0.1.0#egg=django-core-utils'
     ],
     extras_require={

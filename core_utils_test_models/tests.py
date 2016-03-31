@@ -12,12 +12,16 @@ from core_utils.tests.test_util import VersionedModelTestCase
 
 
 class MyVersionedModelFactory(VersionedModelFactory):
+    """Sample factory class.
+    """
     class Meta(object):
+        """Model meta class."""
         model = MyVersionedModel
 
 
 class MyVersionedModelTestCase(VersionedModelTestCase):
-
+    """Sample versioned model unit test class.
+    """
     def test_version_model_create(self):
         instance = MyVersionedModelFactory()
         self.assertEqual(instance.version, 1)

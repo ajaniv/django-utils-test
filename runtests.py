@@ -12,17 +12,21 @@ import django
 from django.test.utils import get_runner
 from django.conf import settings
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'core.tests.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'django_core_utils_test.settings'
 
-test_dir = os.path.dirname(__file__)
+test_dir = os.path.join(os.path.dirname(__file__), 'core_utils_test_models')
 sys.path.insert(0, test_dir)
 
 
 def runtests():
+
     TestRunner = get_runner(settings)
+
     test_runner = TestRunner(verbosity=1, interactive=True)
+
     if hasattr(django, 'setup'):
         django.setup()
+
     failures = test_runner.run_tests([test_dir])
     sys.exit(bool(failures))
 
