@@ -1,0 +1,4 @@
+include LICENSE.txt README.md README.rst
+recursive-include core/static *
+recursive-include core/templates *
+recursive-include docs *
