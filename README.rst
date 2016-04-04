@@ -1,17 +1,15 @@
-=====
-core
-=====
+======================
+django-core-utils-test
+======================
 
-core is a simple Django app to manage reusable Django components.
+*django-core-utils-test* is a Django project to test *django-core-utils*  
+abstract model classes.  It uses a bare bones Django settings and application
+to achieve the following:
+* Testing of model classes derived from abstract base classes.
+* Usage of Sqlite, Postgress, and Mysql to verify proper ORM mappings.
 
-Detailed documentation is in the "docs" directory.
+Notes
+^^^^^
+* pandoc was used to convert from .rst to .md:
 
-Quick start
------------
-
-1. Add "core" to your INSTALLED_APPS setting like this::
-
-    INSTALLED_APPS = [
-        ...
-        'core',
-    ]
+  ``pandoc -f rst -t markdown_github -o README.md README.rst``
