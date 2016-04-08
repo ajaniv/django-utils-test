@@ -14,7 +14,7 @@ services:
 # - sudo mv docker-compose /usr/local/bin
 
 script:
-  - docker-compose -f docker-compose-sqlite.yml up --abort-on-container-exit
+  - docker-compose -f docker-compose-sqlite.yml up
 
 
 #language: python
