@@ -33,7 +33,7 @@ before_install:
 script:
   - if [ -z "$COMPOSE_FILE" ];
     then tox -e $TOX_ENV;
-    else docker-compose -f $FILE up --abort-on-container-exit;
+    else docker-compose -f $COMPOSE_FILE up --abort-on-container-exit;
     fi
 
 #script:
