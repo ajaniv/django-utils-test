@@ -19,7 +19,7 @@ env:
 matrix:
   fast_finish: true
   include:
-    - python: '3.5'
+    - python: '2.7'
       env: COMPOSE_FILE='docker-compose-sqlite.yml'
 
 before_install:
