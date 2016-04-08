@@ -14,13 +14,14 @@ env:
   matrix:
     - TOX_ENV=py27-django18
     - TOX_ENV=py27-django19
+    - COMPOSE_FILE='docker-compose-sqlite.yml'
     
 
-matrix:
-  fast_finish: true
-  include:
-    - python: '2.7'
-      env: COMPOSE_FILE='docker-compose-sqlite.yml'
+#matrix:
+#  fast_finish: true
+#  include:
+#    - python: '2.7'
+#      env: COMPOSE_FILE='docker-compose-sqlite.yml'
 
 before_install:
   - sudo apt-get update
