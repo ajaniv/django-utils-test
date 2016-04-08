@@ -1,31 +1,78 @@
 # django-core-utils-test travis config file
 # TODO: change email address
-
 language: python
+sudo: true
 
+python: '3.5'
 
-sudo: false
-
-python: '2.7'
-
+services:
+  - docker
 env:
-  - TOX_ENV=py27-django18
-  - TOX_ENV=py27-django19
+  global:
+    - COMPOSE_VERSION=1.6.2
 
+  matrix:
+    - TOX_ENV=py35-django18
+    - TOX_ENV=py35-django19
+    - COMPOSE_FILE='docker-compose-sqlite.yml'
+ 
 matrix:
   fast_finish: true
   include:
-    - python: '3.5'
-      env: TOX_ENV=py35-django19
-    - python: '3.5'
-      env: TOX_ENV=py35-django18
+    - python: '2.7'
+      env: TOX_ENV=py27-django19
+    - python: '2.7'
+      env: TOX_ENV=py27-django18
 
-       
+#matrix:
+#  fast_finish: true
+#  include:
+#    - python: '2.7'
+#      env: COMPOSE_FILE='docker-compose-sqlite.yml'
+
+before_install:
+- if [[ $COMPOSE_FILE ]]; then
+    docker_update.sh
+#    sudo apt-get update;
+#    sudo apt-get -o Dpkg::Options::="--force-confnew" --yes --force-yes install docker-engine;
+#    curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose;
+#    chmod +x docker-compose;
+#    sudo mv docker-compose /usr/local/bin;
+  fi
+
+script:
+  - if [ -z "$COMPOSE_FILE" ]; then
+      tox -e $TOX_ENV
+    else 
+      docker-compose -f $COMPOSE_FILE up --abort-on-container-exit
+    fi
+
+#script:
+#  - docker-compose -f docker-compose-sqlite.yml up --abort-on-container-exit
+
 install:
   - pip install tox
 
-script:
-  - tox -e $TOX_ENV
+
+#
+#env:
+#  - TOX_ENV=py27-django18
+#  - TOX_ENV=py27-django19
+#
+#matrix:
+#  fast_finish: true
+#  include:
+#    - python: '3.5'
+#      env: TOX_ENV=py35-django19
+#    - python: '3.5'
+#      env: TOX_ENV=py35-django18
+#
+#       
+#install:
+#  - pip install tox
+#
+#script:
+#  - tox -e $TOX_ENV
 
 notifications:
   email:
