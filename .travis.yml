@@ -12,10 +12,15 @@ env:
     - COMPOSE_VERSION=1.6.2
 
   matrix:
-    - TOX_ENV=py27-django18 FILE=''
-    - TOX_ENV=py27-django19 FILE=''
-    - FILE='docker-compose-sqlite.yml'
+    - TOX_ENV=py27-django18
+    - TOX_ENV=py27-django19
+    
 
+matrix:
+  fast_finish: true
+  include:
+    - python: '3.5'
+      env: COMPOSE_FILE='docker-compose-sqlite.yml'
 
 before_install:
   - sudo apt-get update
@@ -25,7 +30,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 script:
-  - if [ $FILE == '' ];
+  - if [ -z "$COMPOSE_FILE" ];
     then tox -e $TOX_ENV;
     else docker-compose -f $FILE up --abort-on-container-exit;
     fi
