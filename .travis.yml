@@ -1,6 +1,6 @@
 # django-core-utils-test travis config file
 # TODO: change email address
-
+language: python
 sudo: required
 services:
   - docker
