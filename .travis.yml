@@ -2,11 +2,20 @@
 # TODO: change email address
 language: python
 sudo: true
+
+python: '2.7'
+
 services:
   - docker
-
 env:
-  COMPOSE_VERSION: 1.6.2
+  global:
+    - COMPOSE_VERSION=1.6.2
+
+  matrix:
+    - TOX_ENV=py27-django18 FILE=''
+    - TOX_ENV=py27-django19 FILE=''
+    - FILE='docker-compose-sqlite.yml'
+
 
 before_install:
   - sudo apt-get update
@@ -16,15 +25,18 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 script:
-  - docker-compose -f docker-compose-sqlite.yml up --abort-on-container-exit
+  - if [ $FILE == '' ];
+    then tox -e $TOX_ENV;
+    else docker-compose -f $FILE up --abort-on-container-exit;
+    fi
 
-  
-#language: python
-#
-#
-#sudo: false
-#
-#python: '2.7'
+#script:
+#  - docker-compose -f docker-compose-sqlite.yml up --abort-on-container-exit
+
+install:
+  - pip install tox
+
+
 #
 #env:
 #  - TOX_ENV=py27-django18

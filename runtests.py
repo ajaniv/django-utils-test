@@ -12,7 +12,9 @@ import django
 from django.test.utils import get_runner
 from django.conf import settings
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'django_core_utils_test.settings_test'
+DJANGO_SETTINGS_MODULE = 'DJANGO_SETTINGS_MODULE'
+os.environ[DJANGO_SETTINGS_MODULE] = os.environ.get(
+    DJANGO_SETTINGS_MODULE, 'django_core_utils_test.settings_test')
 
 test_dir = os.path.join(os.path.dirname(__file__), 'core_utils_test_models')
 sys.path.insert(0, test_dir)
