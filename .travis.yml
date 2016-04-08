@@ -1,31 +1,47 @@
 # django-core-utils-test travis config file
 # TODO: change email address
 
-language: python
-
-
-sudo: false
-
-python: '2.7'
+sudo: required
+services:
+  - docker
 
 env:
-  - TOX_ENV=py27-django18
-  - TOX_ENV=py27-django19
+  COMPOSE_VERSION: 1.6.2
 
-matrix:
-  fast_finish: true
-  include:
-    - python: '3.5'
-      env: TOX_ENV=py35-django19
-    - python: '3.5'
-      env: TOX_ENV=py35-django18
-
-       
-install:
-  - pip install tox
+before_install:
+ - curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+ - chmod +x docker-compose
+ - sudo mv docker-compose /usr/local/bin
 
 script:
-  - tox -e $TOX_ENV
+  - docker-compose -f docker-compose-sqlite.yml up --abort-on-container-exit
+
+
+#language: python
+#
+#
+#sudo: false
+#
+#python: '2.7'
+#
+#env:
+#  - TOX_ENV=py27-django18
+#  - TOX_ENV=py27-django19
+#
+#matrix:
+#  fast_finish: true
+#  include:
+#    - python: '3.5'
+#      env: TOX_ENV=py35-django19
+#    - python: '3.5'
+#      env: TOX_ENV=py35-django18
+#
+#       
+#install:
+#  - pip install tox
+#
+#script:
+#  - tox -e $TOX_ENV
 
 notifications:
   email:
