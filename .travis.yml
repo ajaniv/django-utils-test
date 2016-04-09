@@ -15,6 +15,8 @@ env:
     - TOX_ENV=py35-django18
     - TOX_ENV=py35-django19
     - COMPOSE_FILE='docker-compose-sqlite.yml'
+    - COMPOSE_FILE='docker-compose-mysql.yml'
+    - COMPOSE_FILE='docker-compose-postgres.yml'
  
 matrix:
   fast_finish: true
@@ -24,22 +26,12 @@ matrix:
     - python: '2.7'
       env: TOX_ENV=py27-django18
 
-#matrix:
-#  fast_finish: true
-#  include:
-#    - python: '2.7'
-#      env: COMPOSE_FILE='docker-compose-sqlite.yml'
 
 before_install:
 - if [[ $COMPOSE_FILE ]]; 
   then ./docker_update.sh;
   fi
-#    sudo apt-get update;
-#    sudo apt-get -o Dpkg::Options::="--force-confnew" --yes --force-yes install docker-engine;
-#    curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose;
-#    chmod +x docker-compose;
-#    sudo mv docker-compose /usr/local/bin;
-# fi
+
 
 script:
   - if [ -z "$COMPOSE_FILE" ]; 
@@ -47,32 +39,9 @@ script:
     else docker-compose -f $COMPOSE_FILE up --abort-on-container-exit;
     fi
 
-#script:
-#  - docker-compose -f docker-compose-sqlite.yml up --abort-on-container-exit
-
 install:
   - pip install tox
 
-
-#
-#env:
-#  - TOX_ENV=py27-django18
-#  - TOX_ENV=py27-django19
-#
-#matrix:
-#  fast_finish: true
-#  include:
-#    - python: '3.5'
-#      env: TOX_ENV=py35-django19
-#    - python: '3.5'
-#      env: TOX_ENV=py35-django18
-#
-#       
-#install:
-#  - pip install tox
-#
-#script:
-#  - tox -e $TOX_ENV
 
 notifications:
   email:
