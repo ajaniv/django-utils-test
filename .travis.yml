@@ -31,20 +31,24 @@ matrix:
 #      env: COMPOSE_FILE='docker-compose-sqlite.yml'
 
 before_install:
-- if [[ $COMPOSE_FILE ]]; then
-    docker_update.sh
+- if [[ $COMPOSE_FILE ]]; 
+  then docker_update.sh;
+  fi
 #    sudo apt-get update;
 #    sudo apt-get -o Dpkg::Options::="--force-confnew" --yes --force-yes install docker-engine;
 #    curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose;
 #    chmod +x docker-compose;
 #    sudo mv docker-compose /usr/local/bin;
-  fi
-
+# fi
 script:
-  - if [ -z "$COMPOSE_FILE" ]; then
-      tox -e $TOX_ENV
-    else 
-      docker-compose -f $COMPOSE_FILE up --abort-on-container-exit
+  - if [ $DEPS == 'modern' ];
+    then nosetests --with-doctest;
+    else nosetests;
+    fi
+script:
+  - if [ -z "$COMPOSE_FILE" ]; 
+    then tox -e $TOX_ENV;
+    else docker-compose -f $COMPOSE_FILE up --abort-on-container-exit;
     fi
 
 #script:
