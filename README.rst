@@ -21,6 +21,12 @@ Notes
 
   ``pandoc -f rst -t markdown_github -o README.md README.rst``
 * Use `eval config_env.sh` to set environment variables for running commands such as `python manage.py test`.
+* Several Django configuration settings have been exported to environment variables (i.e. database settings, security)
+* In order to configure command line docker environment:
+
+    #. docker-machine restart default
+    #. eval $(docker-machine env default)
+
 * To run unit tests in docker sqlite environment: `docker-compose -f docker-compose-sqlite.yml up --abort-on-container-exit` .
 * To run unit tests in docker postgres environment: `docker-compose -f docker-compose-postgres.yml up --abort-on-container-exit` .
 * To run unit tests in docker mysql environment: `docker-compose -f docker-compose-mysql.yml up --abort-on-container-exit` .
