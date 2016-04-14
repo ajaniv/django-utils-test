@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: docker-dockerfile-sqlite.yml
-    command: ./docker_run_tests.sh -d 1
+    command: ./docker_run_tests.sh -w 1 -d none
     volumes:
       - .:/code
     ports:

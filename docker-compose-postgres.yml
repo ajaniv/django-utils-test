@@ -10,7 +10,7 @@ services:
     build: 
       context: .
       dockerfile: docker-dockerfile-postgres.yml
-    command: ./docker_run_tests.sh -d 3
+    command: ./docker_run_tests.sh -w 3 -t postgres -d db-postgres
     volumes:
       - .:/code
     ports:
