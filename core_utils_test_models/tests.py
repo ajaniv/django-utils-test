@@ -11,6 +11,7 @@ import factory
 from django.db.models.deletion import ProtectedError
 from django.db.utils import IntegrityError
 
+from core_utils import constants
 from core_utils.tests.factories import NamedModelFactory, VersionedModelFactory
 from core_utils.tests.test_util import (NamedModelTestCase,
                                         VersionedModelTestCase)
@@ -75,6 +76,19 @@ class MyVersionedModelTestCase(VersionedModelTestCase):
         self.assertTrue(True)
 
 
+class VersionedModelManagerTestCase(VersionedModelTestCase):
+    """Versioned model manager unit test class.
+    """
+
+    def test_get_or_none(self):
+        instance = MyVersionedModel.objects.get_or_none(pk=1)
+        self.assertFalse(instance, "expected none for get_or_none")
+        instance = MyVersionedModelFactory()
+        self.verify_instance(instance)
+        fetched = MyVersionedModel.objects.get_or_none(pk=instance.id)
+        self.assertEqual(instance, fetched, "unexpected results get_or_none")
+
+
 class MyNamedModelFactory(NamedModelFactory):
     """Sample named model factory class.
     """
@@ -102,6 +116,27 @@ class MyNamedModelTestCase(NamedModelTestCase):
         instance2.name = name1
         with self.assertRaises(IntegrityError):
             instance2.save()
+
+
+class NamedModelManagerTestCase(NamedModelTestCase):
+    """Named model manager unit test class.
+    """
+
+    def test_get_named(self):
+        name = 'my name'
+        with self.assertRaises(MyNamedModel.DoesNotExist):
+            MyNamedModel.objects.named_instance(name=name)
+
+        unknown_instance = MyNamedModelFactory(name=constants.UNKNOWN)
+        instance = MyNamedModel.objects.named_instance(name=name)
+        self.assertEqual(instance,
+                         unknown_instance,
+                         "expected unknown from  named_instance")
+        named_instance = MyNamedModelFactory(name=name)
+        fetched = MyNamedModel.objects.named_instance(name=name)
+        self.assertEqual(named_instance,
+                         fetched,
+                         "unexpected results named_instance")
 
 
 class MyPrioritizedModelFactory(VersionedModelFactory):
