@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'core_utils',
+    'django_core_utils',
     'core_utils_test_models'
 ]
 

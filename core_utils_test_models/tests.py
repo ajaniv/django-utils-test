@@ -4,17 +4,17 @@
 
 *django-utils* models unit test module.
 """
-from __future__ import print_function
+from __future__ import absolute_import, print_function
 
 import factory
-
 from django.db.models.deletion import ProtectedError
 from django.db.utils import IntegrityError
 
-from core_utils import constants
-from core_utils.tests.factories import NamedModelFactory, VersionedModelFactory
-from core_utils.tests.test_util import (NamedModelTestCase,
-                                        VersionedModelTestCase)
+from django_core_utils import constants
+from django_core_utils.tests.factories import (NamedModelFactory,
+                                               VersionedModelFactory)
+from django_core_utils.tests.test_util import (NamedModelTestCase,
+                                               VersionedModelTestCase)
 
 from .models import MyNamedModel, MyPrioritizedModel, MyVersionedModel
 
