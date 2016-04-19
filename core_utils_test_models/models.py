@@ -7,7 +7,8 @@ utils_test models module.
 """
 from __future__ import absolute_import
 
-from django_core_utils.models import (NamedModel, PrioritizedModel,
+from django_core_utils.models import (NamedModel, OptionalNamedModel,
+                                      PrioritizedModel,
                                       VersionedModel, db_table)
 
 from .apps import CoreUtilsTestModelsConfig
@@ -33,6 +34,16 @@ class MyNamedModel(NamedModel):
         """Model meta class."""
         app_label = _app_label
         db_table = db_table(_app_label, "MyNamedModel")
+
+
+class MyOptionalNamedModel(OptionalNamedModel):
+    """
+    Sample optional named  model class.
+    """
+    class Meta(object):
+        """Model meta class."""
+        app_label = _app_label
+        db_table = db_table(_app_label, "MyOptionalNamedModel")
 
 
 class MyPrioritizedModel(VersionedModel, PrioritizedModel):
