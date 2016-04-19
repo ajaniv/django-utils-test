@@ -16,6 +16,7 @@ For this to work:
 
 """
 from __future__ import print_function
+
 import MySQLdb
 
 # set host to output of: docker-machine ip

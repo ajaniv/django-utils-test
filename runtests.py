@@ -9,8 +9,8 @@ import os
 import sys
 
 import django
-from django.test.utils import get_runner
 from django.conf import settings
+from django.test.utils import get_runner
 
 DJANGO_SETTINGS_MODULE = 'DJANGO_SETTINGS_MODULE'
 os.environ[DJANGO_SETTINGS_MODULE] = os.environ.get(
