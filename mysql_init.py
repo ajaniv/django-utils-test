@@ -7,11 +7,12 @@ MySql initialization module.
 
 """
 from __future__ import print_function
-import os
-import getopt
-import sys
-import MySQLdb
 
+import getopt
+import os
+import sys
+
+import MySQLdb
 
 db_host = None
 root_user = os.environ.get('MYSQL_ROOT_USER', 'root')

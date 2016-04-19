@@ -16,7 +16,8 @@ from django_core_utils.tests.factories import (NamedModelFactory,
 from django_core_utils.tests.test_util import (NamedModelTestCase,
                                                VersionedModelTestCase)
 
-from .models import MyNamedModel, MyPrioritizedModel, MyVersionedModel
+from .models import (MyNamedModel, MyOptionalNamedModel, MyPrioritizedModel,
+                     MyVersionedModel)
 
 
 class MyVersionedModelFactory(VersionedModelFactory):
@@ -116,6 +117,35 @@ class MyNamedModelTestCase(NamedModelTestCase):
         instance2.name = name1
         with self.assertRaises(IntegrityError):
             instance2.save()
+
+
+class MyOptionalNamedModelFactory(NamedModelFactory):
+    """Sample optional named model factory class.
+    """
+    class Meta(object):
+        """Model meta class."""
+        model = MyOptionalNamedModel
+
+
+class MyOptionalNamedModelTestCase(NamedModelTestCase):
+    """Sample optional named model unit test class.
+    """
+    def test_named_model_create(self):
+        expected = 'myname'
+        instance = MyOptionalNamedModelFactory(name=expected)
+        self.verify_instance(instance)
+        self.assertEqual(instance.name,
+                         expected,
+                         "invalid instance name")
+
+    def test_duplicate_name(self):
+        name1 = 'myname'
+        instance1 = MyOptionalNamedModelFactory(name=name1)
+        self.verify_instance(instance1)
+        instance2 = MyOptionalNamedModelFactory(name='abc')
+        instance2.name = name1
+        instance2.save()
+        self.verify_instance(instance2, version=2)
 
 
 class NamedModelManagerTestCase(NamedModelTestCase):
