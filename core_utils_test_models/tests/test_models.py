@@ -1,31 +1,20 @@
 """
-.. module::  utils.tests
-   :synopsis: django-utils-test models unit test module.
+.. module::  core_utils_test_models.tests.test_models
+   :synopsis: core_utils_test_models models unit test module.
 
-*django-utils* models unit test module.
+*core_utils_test_models* models unit test module.
 """
 from __future__ import absolute_import, print_function
 
-import factory
 from django.db.models.deletion import ProtectedError
 from django.db.utils import IntegrityError
 
 from django_core_utils import constants
-from django_core_utils.tests.factories import (NamedModelFactory,
-                                               VersionedModelFactory)
-from django_core_utils.tests.test_util import (NamedModelTestCase,
-                                               VersionedModelTestCase)
+from django_core_utils.tests.test_utils import (NamedModelTestCase,
+                                                VersionedModelTestCase)
 
-from .models import (MyNamedModel, MyOptionalNamedModel, MyPrioritizedModel,
-                     MyVersionedModel)
-
-
-class MyVersionedModelFactory(VersionedModelFactory):
-    """Sample versioned model factory class.
-    """
-    class Meta(object):
-        """Model meta class."""
-        model = MyVersionedModel
+from . import factories
+from ..models import MyNamedModel, MyVersionedModel
 
 
 class MyVersionedModelTestCase(VersionedModelTestCase):
@@ -48,29 +37,29 @@ class MyVersionedModelTestCase(VersionedModelTestCase):
         self.assertTrue(obj, "invalid instance")
 
     def test_version_model_create(self):
-        instance = MyVersionedModelFactory()
+        instance = factories.MyVersionedModelFactory()
         self.verify_instance(instance)
 
     def test_version_version_update(self):
-        instance = MyVersionedModelFactory()
+        instance = factories.MyVersionedModelFactory()
         self.verify_instance(instance)
         instance_version = instance.version
         instance.save()
-        saved_instance = MyVersionedModel.objects.get(pk=instance.id)
+        saved_instance = factories.MyVersionedModel.objects.get(pk=instance.id)
         self.assertEqual(instance_version + 1, saved_instance.version)
 
     def test_deletion(self):
-        instance = MyVersionedModelFactory()
+        instance = factories.MyVersionedModelFactory()
         self.verify_instance(instance)
-        self.assertEqual(MyVersionedModel.objects.count(), 1)
+        self.assertEqual(factories.MyVersionedModel.objects.count(), 1)
         instance.delete()
         with self.assertRaises(MyVersionedModel.DoesNotExist):
-            MyVersionedModel.objects.get(pk=instance.id)
-        self.assertEqual(MyVersionedModel.objects.count(), 0)
+            factories.MyVersionedModel.objects.get(pk=instance.id)
+        self.assertEqual(factories.MyVersionedModel.objects.count(), 0)
 
     def test_delete_effective_user(self):
         # Verifies on_protect deletion behavior
-        instance = MyVersionedModelFactory()
+        instance = factories.MyVersionedModelFactory()
         self.verify_instance(instance)
         with self.assertRaises(ProtectedError):
             instance.effective_user.delete()
@@ -82,20 +71,13 @@ class VersionedModelManagerTestCase(VersionedModelTestCase):
     """
 
     def test_get_or_none(self):
-        instance = MyVersionedModel.objects.get_or_none(pk=1)
+        instance = factories.MyVersionedModel.objects.get_or_none(pk=1)
         self.assertFalse(instance, "expected none for get_or_none")
-        instance = MyVersionedModelFactory()
+        instance = factories.MyVersionedModelFactory()
         self.verify_instance(instance)
-        fetched = MyVersionedModel.objects.get_or_none(pk=instance.id)
+        fetched = factories.MyVersionedModel.objects.get_or_none(
+            pk=instance.id)
         self.assertEqual(instance, fetched, "unexpected results get_or_none")
-
-
-class MyNamedModelFactory(NamedModelFactory):
-    """Sample named model factory class.
-    """
-    class Meta(object):
-        """Model meta class."""
-        model = MyNamedModel
 
 
 class MyNamedModelTestCase(NamedModelTestCase):
@@ -103,7 +85,7 @@ class MyNamedModelTestCase(NamedModelTestCase):
     """
     def test_named_model_create(self):
         expected = 'myname'
-        instance = MyNamedModelFactory(name=expected)
+        instance = factories.MyNamedModelFactory(name=expected)
         self.verify_instance(instance)
         self.assertEqual(instance.name,
                          expected,
@@ -111,20 +93,12 @@ class MyNamedModelTestCase(NamedModelTestCase):
 
     def test_duplicate_name(self):
         name1 = 'myname'
-        instance1 = MyNamedModelFactory(name=name1)
+        instance1 = factories.MyNamedModelFactory(name=name1)
         self.verify_instance(instance1)
-        instance2 = MyNamedModelFactory(name='abc')
+        instance2 = factories.MyNamedModelFactory(name='abc')
         instance2.name = name1
         with self.assertRaises(IntegrityError):
             instance2.save()
-
-
-class MyOptionalNamedModelFactory(NamedModelFactory):
-    """Sample optional named model factory class.
-    """
-    class Meta(object):
-        """Model meta class."""
-        model = MyOptionalNamedModel
 
 
 class MyOptionalNamedModelTestCase(NamedModelTestCase):
@@ -132,7 +106,7 @@ class MyOptionalNamedModelTestCase(NamedModelTestCase):
     """
     def test_named_model_create(self):
         expected = 'myname'
-        instance = MyOptionalNamedModelFactory(name=expected)
+        instance = factories.MyOptionalNamedModelFactory(name=expected)
         self.verify_instance(instance)
         self.assertEqual(instance.name,
                          expected,
@@ -140,9 +114,9 @@ class MyOptionalNamedModelTestCase(NamedModelTestCase):
 
     def test_duplicate_name(self):
         name1 = 'myname'
-        instance1 = MyOptionalNamedModelFactory(name=name1)
+        instance1 = factories.MyOptionalNamedModelFactory(name=name1)
         self.verify_instance(instance1)
-        instance2 = MyOptionalNamedModelFactory(name='abc')
+        instance2 = factories.MyOptionalNamedModelFactory(name='abc')
         instance2.name = name1
         instance2.save()
         self.verify_instance(instance2, version=2)
@@ -157,33 +131,24 @@ class NamedModelManagerTestCase(NamedModelTestCase):
         with self.assertRaises(MyNamedModel.DoesNotExist):
             MyNamedModel.objects.named_instance(name=name)
 
-        unknown_instance = MyNamedModelFactory(name=constants.UNKNOWN)
+        unknown_instance = factories.MyNamedModelFactory(
+            name=constants.UNKNOWN)
         instance = MyNamedModel.objects.named_instance(name=name)
         self.assertEqual(instance,
                          unknown_instance,
                          "expected unknown from  named_instance")
-        named_instance = MyNamedModelFactory(name=name)
+        named_instance = factories.MyNamedModelFactory(name=name)
         fetched = MyNamedModel.objects.named_instance(name=name)
         self.assertEqual(named_instance,
                          fetched,
                          "unexpected results named_instance")
 
 
-class MyPrioritizedModelFactory(VersionedModelFactory):
-    """Sample prioritized model factory class.
-    """
-    class Meta(object):
-        """Model meta class."""
-        model = MyPrioritizedModel
-
-    priority = factory.Sequence(lambda n: n)
-
-
 class MyPrioritizedModelTestCase(VersionedModelTestCase):
     """Sample prioritized model unit test class.
     """
     def test_version_model_create(self):
-        instance = MyPrioritizedModelFactory()
+        instance = factories.MyPrioritizedModelFactory()
         self.verify_instance(instance)
         self.assertTrue(instance.priority >= 0,
                         "invalid priority %d" % instance.priority)
