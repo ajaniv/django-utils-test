@@ -20,7 +20,7 @@ class MyVersionedModel(VersionedModel):
     """
     Sample versioned model class.
     """
-    class Meta(object):
+    class Meta(VersionedModel.Meta):
         """Model meta class."""
         app_label = _app_label
         db_table = db_table(_app_label, "MyVersionedModel")
@@ -30,7 +30,7 @@ class MyNamedModel(NamedModel):
     """
     Sample named  model class.
     """
-    class Meta(object):
+    class Meta(NamedModel.Meta):
         """Model meta class."""
         app_label = _app_label
         db_table = db_table(_app_label, "MyNamedModel")
@@ -40,17 +40,17 @@ class MyOptionalNamedModel(OptionalNamedModel):
     """
     Sample optional named  model class.
     """
-    class Meta(object):
+    class Meta(OptionalNamedModel.Meta):
         """Model meta class."""
         app_label = _app_label
         db_table = db_table(_app_label, "MyOptionalNamedModel")
 
 
-class MyPrioritizedModel(VersionedModel, PrioritizedModel):
+class MyPrioritizedModel(PrioritizedModel):
     """
     Sample prioritized model class.
     """
-    class Meta(object):
+    class Meta(PrioritizedModel.Meta):
         """Model meta class."""
         app_label = _app_label
         db_table = db_table(_app_label, "MyPrioritizedModel")

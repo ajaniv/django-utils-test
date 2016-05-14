@@ -147,7 +147,7 @@ class NamedModelManagerTestCase(NamedModelTestCase):
 class MyPrioritizedModelTestCase(VersionedModelTestCase):
     """Sample prioritized model unit test class.
     """
-    def test_version_model_create(self):
+    def test_prioritized_model_create(self):
         instance = factories.MyPrioritizedModelFactory()
         self.verify_instance(instance)
         self.assertTrue(instance.priority >= 0,
