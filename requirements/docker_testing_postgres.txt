@@ -1,4 +1,0 @@
-Django==1.9.4
--r common.txt
--r postgres.txt
--r testing.txt

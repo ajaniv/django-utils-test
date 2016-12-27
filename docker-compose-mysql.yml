@@ -5,7 +5,7 @@ services:
     restart: always
     image: mysql:latest
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
     # In a 'real' environment passwords will be defined in the environment
     # by only using the key
