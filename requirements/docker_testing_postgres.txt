@@ -1,4 +1,4 @@
--r special
+-r special.txt
 -r env_common.txt
 -r postgres.txt
 -r django_testing_common.txt
