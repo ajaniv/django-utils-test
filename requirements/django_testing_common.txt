@@ -1,0 +1,5 @@
+# testing tools requirements
+coverage==4.2
+factory_boy==2.8.1
+mock==2.0.0
+

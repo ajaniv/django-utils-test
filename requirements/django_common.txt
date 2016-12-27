@@ -1,0 +1,5 @@
+# Django common requirements
+-r django_rest_framework_common.txt
+django-macaddress==1.4.0
+django-phonenumber-field==1.1.0
+django-timezone-field==2.0

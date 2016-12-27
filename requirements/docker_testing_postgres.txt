@@ -1,4 +1,4 @@
-Django==1.9.4
--r common.txt
+-r special
+-r env_common.txt
 -r postgres.txt
--r testing.txt
+-r django_testing_common.txt

@@ -1,0 +1,4 @@
+# tox environment requirements file
+-r env_common.txt
+-r coding_style_common.txt
+-r django_testing_common.txt

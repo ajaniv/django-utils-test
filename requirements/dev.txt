@@ -1,3 +1,8 @@
--r common.txt
--r dev_tools.txt
-Django==1.9.4
+# development environment requirements file
+-r special.txt
+-r env_common.txt
+-r django_dev_tools_common.txt
+-r coding_style_common.txt
+-r django_testing_common.txt
+-r documentation_common.txt
+
