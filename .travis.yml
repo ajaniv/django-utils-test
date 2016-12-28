@@ -14,6 +14,7 @@ env:
   matrix:
     - TOX_ENV=py35-django18
     - TOX_ENV=py35-django19
+    - TOX_ENV=py35-django110
     - COMPOSE_FILE='docker-compose-sqlite.yml'
     - COMPOSE_FILE='docker-compose-mysql.yml'
     - COMPOSE_FILE='docker-compose-postgres.yml'
@@ -25,6 +26,8 @@ matrix:
       env: TOX_ENV=py27-django19
     - python: '2.7'
       env: TOX_ENV=py27-django18
+    - python: '2.7'
+      env: TOX_ENV=py27-django110
 
 
 before_install:
