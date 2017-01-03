@@ -19,7 +19,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 _git_url_root = 'git+ssh://git@github.com/ajaniv/'
 setup(
     name='django-core-utils-test',
-    version='0.1.0',
+    version='0.2.0',
     include_package_data=True,
     license='BSD License',  # example license
     description='A collection of reusable low-level Django components',
@@ -44,8 +44,8 @@ setup(
         'Django>=1.9.0'
     ],
     dependency_links=[
-        _git_url_root + 'python-core-utils@v0.1.0#egg=python-core-utils',
-        _git_url_root + 'django-core-utils@v0.1.0#egg=django-core-utils'
+        _git_url_root + 'python-core-utils@v0.2.0#egg=python-core-utils',
+        _git_url_root + 'django-core-utils@v0.2.0#egg=django-core-utils'
     ],
     extras_require={
         'dev': ['check-manifest'],
