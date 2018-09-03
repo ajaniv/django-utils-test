@@ -40,7 +40,7 @@ class MyVersionedModelTestCase(VersionedModelTestCase):
         instance = factories.MyVersionedModelFactory()
         self.verify_instance(instance)
 
-    def test_version_version_update(self):
+    def test_version_update(self):
         instance = factories.MyVersionedModelFactory()
         self.verify_instance(instance)
         instance_version = instance.version
