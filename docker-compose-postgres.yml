@@ -6,7 +6,7 @@ services:
     image: postgres:latest
     ports:
     - "5433:5432"
-  web-postgres:
+  web-test:
     build: 
       context: .
       dockerfile: docker-dockerfile-postgres.yml

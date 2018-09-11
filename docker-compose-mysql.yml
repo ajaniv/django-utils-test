@@ -14,7 +14,7 @@ services:
     - MYSQL_PASSWORD=test_user
     - MYSQL_DATABASE=django_core_utils
     
-  web-mysql:
+  web-test:
     build: 
       context: .
       dockerfile: docker-dockerfile-mysql.yml
