@@ -41,7 +41,7 @@ before_install:
 script:
   - if [ -z "$COMPOSE_FILE" ]; 
     then tox -e $TOXENV;
-    else docker-compose -f $COMPOSE_FILE up --abort-on-container-exit;
+    else docker-compose -f $COMPOSE_FILE up --abort-on-container-exit || travis_terminate 1;
     fi
 
 install:
