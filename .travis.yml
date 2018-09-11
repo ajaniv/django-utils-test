@@ -9,7 +9,7 @@ services:
   - docker
 env:
   global:
-    - COMPOSE_VERSION=1.6.2
+    - COMPOSE_VERSION=3.7
     - SERVICE='web-test'
   matrix:
     - TOXENV=py36-django11115
@@ -41,7 +41,7 @@ before_install:
 script:
   - if [ -z "$COMPOSE_FILE" ]; 
     then tox -e $TOXENV;
-    else docker-compose -f $COMPOSE_FILE up --abort-on-container-exit --exit-code-from 'web-test' || travis_terminate 1;
+    else docker-compose -f $COMPOSE_FILE up --abort-on-container-exit --exit-code-from $SERVICE || travis_terminate 1;
     fi
 
 install:
