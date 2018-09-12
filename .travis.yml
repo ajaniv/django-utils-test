@@ -9,7 +9,7 @@ services:
   - docker
 env:
   global:
-    - DOCKER_COMPOSE_VERSION: 3.6
+    - DOCKER_COMPOSE_VERSION: 1.22.0
     - SERVICE='web-test'
   matrix:
     - TOXENV=py36-django11115
