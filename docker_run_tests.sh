@@ -40,4 +40,4 @@ if [ "$TYPE" = "mysql" ]; then
 	python mysql_init.py -d $DB_HOST
 fi
 
-python manage.py test --setting=django_core_utils_test.settings_test
+python manage.py test --settings=django_core_utils_test.settings_test
