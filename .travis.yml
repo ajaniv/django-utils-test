@@ -12,25 +12,25 @@ env:
     - COMPOSE_VERSION=1.6.2
     - SERVICE='web-test'
   matrix:
-    - TOXENV=py36-django11115
-    - TOXENV=py36-django211
+#    - TOXENV=py36-django11115
+#    - TOXENV=py36-django211
     - COMPOSE_FILE='docker-compose-sqlite.yml' 
-    - COMPOSE_FILE='docker-compose-mysql.yml'
-    - COMPOSE_FILE='docker-compose-postgres.yml'
+#    - COMPOSE_FILE='docker-compose-mysql.yml'
+#    - COMPOSE_FILE='docker-compose-postgres.yml'
  
-matrix:
-  fast_finish: true
-  include:
-    - python: '2.7'
-      env: TOXENV=py27-django11115
-    - python: '3.5'
-      env: TOXENV=py35-django11115
-    - python: '3.5'
-      env: TOXENV=py35-django211
-    - python: '3.7'
-      env: TOXENV=py37-django211
-      dist: xenial
-      sudo: true
+#matrix:
+#  fast_finish: true
+#  include:
+#    - python: '2.7'
+#      env: TOXENV=py27-django11115
+#    - python: '3.5'
+#      env: TOXENV=py35-django11115
+#    - python: '3.5'
+#      env: TOXENV=py35-django211
+#    - python: '3.7'
+#      env: TOXENV=py37-django211
+#      dist: xenial
+#      sudo: true
 
 before_install:
 - docker version
@@ -43,7 +43,7 @@ before_install:
 script:
   - if [ -z "$COMPOSE_FILE" ]; 
     then tox -e $TOXENV;
-    else docker-compose -f $COMPOSE_FILE up --abort-on-container-exit ;
+    else docker -v; docker-compose -v; docker-compose -f $COMPOSE_FILE up --abort-on-container-exit ;
     fi
 
 install:
