@@ -9,7 +9,7 @@ services:
   - docker
 env:
   global:
-    - COMPOSE_VERSION=1.6.2
+    - DOCKER_COMPOSE_VERSION=1.6.2
     - SERVICE='web-test'
   matrix:
 #    - TOXENV=py36-django11115
@@ -41,9 +41,11 @@ before_install:
 
 
 script:
+  - docker version
+  - docker-compose version
   - if [ -z "$COMPOSE_FILE" ]; 
     then tox -e $TOXENV;
-    else docker -v; docker-compose -v; docker-compose -f $COMPOSE_FILE up --abort-on-container-exit ;
+    else docker-compose -f $COMPOSE_FILE up --abort-on-container-exit ;
     fi
 
 install:
