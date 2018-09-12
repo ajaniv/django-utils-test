@@ -33,6 +33,7 @@ matrix:
       sudo: true
 
 before_install:
+- docker -v
 - if [[ $COMPOSE_FILE ]]; 
   then ./docker_update.sh;
   fi
