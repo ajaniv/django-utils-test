@@ -1,5 +1,5 @@
 # docker-compose sqlite configuration file
-version: "3"
+version: '2'
 services:
   web-test:
     build:
