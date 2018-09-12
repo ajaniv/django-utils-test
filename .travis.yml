@@ -41,8 +41,8 @@ before_install:
 
 
 script:
-  - docker version
-  - docker-compose version
+  - docker -v
+  - docker-compose -v
   - if [ -z "$COMPOSE_FILE" ]; 
     then tox -e $TOXENV;
     else docker-compose -f $COMPOSE_FILE up --abort-on-container-exit ;
