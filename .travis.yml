@@ -11,7 +11,9 @@ env:
   global:
 #    - DOCKER_COMPOSE_VERSION=1.22.0
 #    - DOCKER_VERSION=17.09.0-ce
+#    - DOCKER_VERSION=1.6.2
     - SERVICE='web-test'
+    - COMPOSE_VERSION=1.6.2
   matrix:
 #    - TOXENV=py36-django11115
 #    - TOXENV=py36-django211
