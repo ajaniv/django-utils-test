@@ -19,7 +19,7 @@ services:
     build: 
       context: .
       dockerfile: docker-dockerfile-mysql.yml
-    command: ./docker_run_tests.sh -w 15 -t mysql -d db-mysql
+    command: ./docker_run_tests.sh -w 5 -t mysql -d db-mysql
     volumes:
       - .:/code
     ports:
