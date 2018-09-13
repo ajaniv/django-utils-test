@@ -17,9 +17,6 @@ env:
   matrix:
     - TOXENV=py36-django11115
     - TOXENV=py36-django211
-    - COMPOSE_FILE='docker-compose-sqlite.yml' 
-    - COMPOSE_FILE='docker-compose-mysql.yml'
-    - COMPOSE_FILE='docker-compose-postgres.yml'
  
 matrix:
   fast_finish: true
