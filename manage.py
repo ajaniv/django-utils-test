@@ -13,7 +13,6 @@ if __name__ == '__main__':
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
-        
         if sys.version_info < (3,):
             raise ImportError(msg)
         else:
